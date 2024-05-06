@@ -15,7 +15,8 @@ module Karafka
             state[:aggregated].each_value do |metrics|
               metrics.each do |metric|
                 listeners = if metric.last.key?(:listeners)
-                              metric.last[:listeners].to_i
+                              value = metric.last[:listeners]
+                              value.is_a?(Hash) ? 0 : value.to_i
                             elsif metric.last.key?(:listeners_count)
                               metric.last[:listeners_count].to_i
                             else
